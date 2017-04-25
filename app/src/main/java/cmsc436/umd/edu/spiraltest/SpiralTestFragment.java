@@ -14,7 +14,9 @@ public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
     public static final String HAND_KEY = "HAND_KEY";
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
+    public static final int EASY_TRACE_SIZE = 50;
     public static final int MEDIUM_TRACE_SIZE = 40;
+    public static final int HARD_TRACE_SIZE = 30;
 
     private Activity activity;
     private Button button;
@@ -46,24 +48,24 @@ public class SpiralTestFragment extends Fragment{
         side = getArguments().getString(HAND_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
 
+        drawView = (DrawingView) view.findViewById(R.id.drawView);
+        original = (ImageView)view.findViewById(R.id.spiral);
+
         // Select spiral depending on difficulty
         switch(difficulty) {
             case "easy":
                 original.setImageResource(R.drawable.easy_spiral);
-                drawView.setDrawPaintSize(50);
+                drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
             case "hard":
-                original.setImageResource(R.drawable.hard_r);
-                drawView.setDrawPaintSize(30);
+                original.setImageResource(R.drawable.hard_spiral);
+                drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
             default:
                 original.setImageResource(R.drawable.medium_spiral);
-                drawView.setDrawPaintSize(40);
+                drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
         }
-
-        drawView = (DrawingView) view.findViewById(R.id.drawing);
-        original = (ImageView)view.findViewById(R.id.spiral);
 
         // flip the spiral horizontally if left handed
         if (side.equals("left")) {

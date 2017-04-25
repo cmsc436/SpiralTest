@@ -45,9 +45,6 @@ public class DrawingView extends View {
         drawCanvas = new Canvas(canvasBitmap);
     }
 
-    protected void setDrawPaintSize(int w) {
-        drawPaint.setStrokeWidth(w);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
