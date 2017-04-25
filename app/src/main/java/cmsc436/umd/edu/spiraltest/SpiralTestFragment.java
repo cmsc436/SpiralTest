@@ -52,6 +52,12 @@ public class SpiralTestFragment extends Fragment{
             } else {
                 original.setImageResource(R.drawable.med_r);
             }
+        } else if (difficulty.equals("hard")) {
+            if (side.equals("left")){
+                original.setImageResource(R.drawable.hard_l);
+            } else {
+                original.setImageResource(R.drawable.hard_r);
+            }
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
