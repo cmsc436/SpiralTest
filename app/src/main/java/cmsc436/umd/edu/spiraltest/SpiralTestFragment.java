@@ -2,13 +2,16 @@ package cmsc436.umd.edu.spiraltest;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
@@ -25,6 +28,10 @@ public class SpiralTestFragment extends Fragment{
     private String side;
     private String difficulty;
     private DrawingView drawView;
+    private int timer_length;
+    private CountDownTimer timer;
+    private TextView text;
+    private boolean started = false;
 
     public interface OnFinishListener{
         //do nothing right now
@@ -48,20 +55,24 @@ public class SpiralTestFragment extends Fragment{
         side = getArguments().getString(HAND_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
 
+        text = (TextView) view.findViewById(R.id.roundText);
         drawView = (DrawingView) view.findViewById(R.id.drawView);
         original = (ImageView)view.findViewById(R.id.spiral);
 
         // Select spiral depending on difficulty
         switch(difficulty) {
             case "easy":
+                timer_length = 10000;
                 original.setImageResource(R.drawable.easy_spiral);
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
             case "hard":
+                timer_length = 20000;
                 original.setImageResource(R.drawable.hard_spiral);
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
             default:
+                timer_length = 15000;
                 original.setImageResource(R.drawable.medium_spiral);
                 drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
@@ -71,6 +82,32 @@ public class SpiralTestFragment extends Fragment{
         if (side.equals("left")) {
             original.setScaleX(-1);
         }
+
+        timer = new CountDownTimer(timer_length,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                text.setText("Timer: " + millisUntilFinished/1000);
+            }
+
+            // once timer is completed, user should not be able to draw anymore
+            @Override
+            public void onFinish() {
+                text.setText("Time's up! Please click Finish.");
+                drawView.pause();
+            }
+        };
+
+        // starts timer when user begins drawing
+        drawView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!started) {
+                    started = true;
+                    timer.start();
+                }
+                return false;
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
