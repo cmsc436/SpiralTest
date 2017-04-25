@@ -1,8 +1,14 @@
 package cmsc436.umd.edu.spiraltest;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +18,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.UUID;
 
 public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
+    private static final int PERMISSION_REQUEST_CODE = 1;
     public static final String HAND_KEY = "HAND_KEY";
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
     public static final int EASY_TRACE_SIZE = 50;
@@ -112,7 +122,8 @@ public class SpiralTestFragment extends Fragment{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //should go back to activity, maybe?
+                saveDrawing();
+                // should redirect to the results page
             }
         });
 
@@ -128,6 +139,37 @@ public class SpiralTestFragment extends Fragment{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveDrawing(){
+        view = this.getView();
+        if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSION_REQUEST_CODE);
+        } else {
+            String imgSaved = MediaStore.Images.Media.insertImage(
+                    activity.getContentResolver(), screenShot(view),
+                    UUID.randomUUID().toString() + ".png", "drawing");
+            if (imgSaved != null) {
+                Toast savedToast = Toast.makeText(activity.getApplicationContext(),
+                        "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
+                savedToast.show();
+            } else {
+                Toast unsavedToast = Toast.makeText(activity.getApplicationContext(),
+                        "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
+                unsavedToast.show();
+            }
+            drawView.destroyDrawingCache();
+        }
+
+        drawView.clear();
+    }
+
+    public Bitmap screenShot(View view) {
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
+                view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
     }
 }
 
