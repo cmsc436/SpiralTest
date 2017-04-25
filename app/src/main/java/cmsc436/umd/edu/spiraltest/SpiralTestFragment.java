@@ -14,6 +14,7 @@ public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
     public static final String HAND_KEY = "HAND_KEY";
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
+    public static final int MEDIUM_TRACE_SIZE = 40;
 
     private Activity activity;
     private Button button;
@@ -21,6 +22,7 @@ public class SpiralTestFragment extends Fragment{
     private View view;
     private String side;
     private String difficulty;
+    private DrawingView drawView;
 
     public interface OnFinishListener{
         //do nothing right now
@@ -44,7 +46,7 @@ public class SpiralTestFragment extends Fragment{
         side = getArguments().getString(HAND_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
         //drawview stuff
-        //drawView = (DrawingView)view.findViewById(R.id.drawing);
+        drawView = (DrawingView)view.findViewById(R.id.drawView);
         original = (ImageView)view.findViewById(R.id.spiral);
 
         // Select spiral depending on difficulty
