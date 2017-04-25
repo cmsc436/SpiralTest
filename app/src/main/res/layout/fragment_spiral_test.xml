@@ -16,6 +16,17 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/roundText"
         android:textSize="26dp" />
+
+    <cmsc436.umd.edu.spiraltest.DrawingView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignTop="@+id/spiral"
+        android:layout_alignBottom="@+id/spiral"
+        android:layout_alignRight="@+id/spiral"
+        android:layout_alignLeft="@+id/spiral"
+        android:layout_alignStart="@+id/spiral"
+        android:layout_alignEnd="@+id/spiral" />
+
     <Button
         android:text="Finish"
         android:layout_width="wrap_content"
