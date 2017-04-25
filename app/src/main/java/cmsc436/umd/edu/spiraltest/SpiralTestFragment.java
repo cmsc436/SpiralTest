@@ -46,13 +46,26 @@ public class SpiralTestFragment extends Fragment{
         //drawview stuff
         //drawView = (DrawingView)view.findViewById(R.id.drawing);
         original = (ImageView)view.findViewById(R.id.spiral);
-        if (difficulty.equals("medium")) {
-            if (side.equals("left")){
-                original.setImageResource(R.drawable.med_l);
-            } else {
-                original.setImageResource(R.drawable.med_r);
-            }
+
+        // Select spiral depending on difficulty
+        switch(difficulty) {
+            case "easy":
+                original.setImageResource(R.drawable.easy_spiral);
+                break;
+            case "hard":
+                //original.setImageResource(R.drawable.hard_spiral);
+                break;
+            default:
+                original.setImageResource(R.drawable.medium_spiral);
+                break;
+
         }
+
+        // flip the spiral horizontally if left handed
+        if (side.equals("left")) {
+            original.setScaleX(-1);
+        }
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
