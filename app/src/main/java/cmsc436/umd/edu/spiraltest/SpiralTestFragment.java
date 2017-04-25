@@ -43,8 +43,7 @@ public class SpiralTestFragment extends Fragment{
         Bundle bundle = getArguments();
         side = getArguments().getString(HAND_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
-        //drawview stuff
-        //drawView = (DrawingView)view.findViewById(R.id.drawing);
+        DrawingView drawView = (DrawingView)view.findViewById(R.id.drawing);
         original = (ImageView)view.findViewById(R.id.spiral);
         if (difficulty.equals("medium")) {
             if (side.equals("left")){
@@ -52,12 +51,16 @@ public class SpiralTestFragment extends Fragment{
             } else {
                 original.setImageResource(R.drawable.med_r);
             }
+            drawView.setDrawPaintSize(40);
         } else if (difficulty.equals("hard")) {
             if (side.equals("left")){
                 original.setImageResource(R.drawable.hard_l);
             } else {
                 original.setImageResource(R.drawable.hard_r);
             }
+            drawView.setDrawPaintSize(30);
+        } else if (difficulty.equals("easy")) {
+            drawView.setDrawPaintSize(50);
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
