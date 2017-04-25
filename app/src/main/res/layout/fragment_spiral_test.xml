@@ -25,7 +25,8 @@
         android:layout_alignRight="@+id/spiral"
         android:layout_alignLeft="@+id/spiral"
         android:layout_alignStart="@+id/spiral"
-        android:layout_alignEnd="@+id/spiral" />
+        android:layout_alignEnd="@+id/spiral"
+        android:id="@+id/drawView"/>
 
     <Button
         android:text="Finish"

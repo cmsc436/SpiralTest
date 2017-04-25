@@ -22,6 +22,10 @@ public class DrawingView extends View {
         setupDrawing();
     }
 
+    public void setDrawPaintSize(int size) {
+        drawPaint.setStrokeWidth(size);
+    }
+
     private void setupDrawing(){
         drawPath = new Path();
         drawPaint = new Paint();
@@ -33,6 +37,7 @@ public class DrawingView extends View {
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
         canvasPaint = new Paint(Paint.DITHER_FLAG);
     }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -45,6 +50,7 @@ public class DrawingView extends View {
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float touchX = event.getX();
