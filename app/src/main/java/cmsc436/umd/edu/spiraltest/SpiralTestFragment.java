@@ -45,23 +45,25 @@ public class SpiralTestFragment extends Fragment{
         Bundle bundle = getArguments();
         side = getArguments().getString(HAND_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
-        //drawview stuff
-        drawView = (DrawingView)view.findViewById(R.id.drawView);
-        original = (ImageView)view.findViewById(R.id.spiral);
 
         // Select spiral depending on difficulty
         switch(difficulty) {
             case "easy":
                 original.setImageResource(R.drawable.easy_spiral);
+                drawView.setDrawPaintSize(50);
                 break;
             case "hard":
-                //original.setImageResource(R.drawable.hard_spiral);
+                original.setImageResource(R.drawable.hard_r);
+                drawView.setDrawPaintSize(30);
                 break;
             default:
                 original.setImageResource(R.drawable.medium_spiral);
+                drawView.setDrawPaintSize(40);
                 break;
-
         }
+
+        drawView = (DrawingView) view.findViewById(R.id.drawing);
+        original = (ImageView)view.findViewById(R.id.spiral);
 
         // flip the spiral horizontally if left handed
         if (side.equals("left")) {
@@ -74,7 +76,9 @@ public class SpiralTestFragment extends Fragment{
                 //should go back to activity, maybe?
             }
         });
+
         return view;
+
     }
 
     @Override
