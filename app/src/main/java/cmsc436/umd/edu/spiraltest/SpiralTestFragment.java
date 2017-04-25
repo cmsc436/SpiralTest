@@ -21,6 +21,7 @@ public class SpiralTestFragment extends Fragment{
     private View view;
     private String side;
     private String difficulty;
+    private DrawingView drawView;
 
     public interface OnFinishListener{
         //do nothing right now
@@ -43,7 +44,7 @@ public class SpiralTestFragment extends Fragment{
         Bundle bundle = getArguments();
         side = getArguments().getString(HAND_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
-        DrawingView drawView = (DrawingView)view.findViewById(R.id.drawing);
+        drawView = (DrawingView) view.findViewById(R.id.drawing);
         original = (ImageView)view.findViewById(R.id.spiral);
         if (difficulty.equals("medium")) {
             if (side.equals("left")){
