@@ -14,6 +14,9 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="edu.umd.cmsc436.spiral.action.TRIAL" />
+                <action android:name="edu.umd.cmsc436.spiral.action.PRACTICE" />
+                <action android:name="edu.umd.cmsc436.spiral.action.HELP" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

@@ -22,11 +22,12 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
+import static cmsc436.umd.edu.spiraltest.MainActivity.DIFFICULTY_KEY;
+import static cmsc436.umd.edu.spiraltest.MainActivity.SIDE_KEY;
+
 public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
     private static final int PERMISSION_REQUEST_CODE = 1;
-    public static final String HAND_KEY = "HAND_KEY";
-    public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
     public static final int EASY_TRACE_SIZE = 50;
     public static final int MEDIUM_TRACE_SIZE = 40;
     public static final int HARD_TRACE_SIZE = 30;
@@ -50,7 +51,7 @@ public class SpiralTestFragment extends Fragment{
     public static SpiralTestFragment newInstance(String side, String difficulty){
         SpiralTestFragment fragment = new SpiralTestFragment();
         Bundle args = new Bundle();
-        args.putString(HAND_KEY, side);
+        args.putString(SIDE_KEY, side);
         args.putString(DIFFICULTY_KEY, difficulty);
         fragment.setArguments(args);
         return fragment;
@@ -62,7 +63,7 @@ public class SpiralTestFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_spiral_test, container, false);
         button = (Button)view.findViewById(R.id.finish);
         Bundle bundle = getArguments();
-        side = getArguments().getString(HAND_KEY);
+        side = getArguments().getString(SIDE_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
 
         text = (TextView) view.findViewById(R.id.roundText);
