@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
 
 import static cmsc436.umd.edu.spiraltest.SpiralTestFragment.newInstance;
@@ -16,18 +17,21 @@ public class MainActivity extends AppCompatActivity {
     public static final String TEST_TYPE_TRIAL = "TRIAL";
     public static final String TEST_TYPE_PRACTICE = "PRACTICE";
     public static final String TEST_TYPE_HELP = "HELP";
+    public static final String MODE_KEY = "MODE_KEY";
 
     private String side;
     private String difficulty;
     private RadioGroup side_rg;
     private RadioGroup difficulty_rg;
     private String testType;
+    private Button button;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        button = (Button)findViewById(R.id.button);
         Intent intent = getIntent();
         if (intent.getAction().equals("edu.umd.cmsc436.spiral.action.TRIAL")) {
             testType = TEST_TYPE_TRIAL;
@@ -35,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
             testType = TEST_TYPE_HELP;
         } else {
             testType = TEST_TYPE_PRACTICE;
+            // change button text
+            button.setText("Begin Practice");
+
         }
 
         side_rg = (RadioGroup) findViewById(R.id.side);
@@ -76,6 +83,5 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtras(b);
 
         startActivity(intent);
-        finish();
     }
 }

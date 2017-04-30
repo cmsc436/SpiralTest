@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.UUID;
 
 import static cmsc436.umd.edu.spiraltest.MainActivity.DIFFICULTY_KEY;
+import static cmsc436.umd.edu.spiraltest.MainActivity.MODE_KEY;
 import static cmsc436.umd.edu.spiraltest.MainActivity.SIDE_KEY;
 
 public class SpiralTestFragment extends Fragment{
@@ -39,20 +40,22 @@ public class SpiralTestFragment extends Fragment{
     private String side;
     private String difficulty;
     private DrawingView drawView;
-    private int timer_length;
+    private Integer timer_length;
     private CountDownTimer timer;
     private TextView text;
     private boolean started = false;
+    private boolean isPractice;
 
     public interface OnFinishListener{
         //do nothing right now
     }
 
-    public static SpiralTestFragment newInstance(String side, String difficulty){
+    public static SpiralTestFragment newInstance(boolean isPractice, String side, String difficulty){
         SpiralTestFragment fragment = new SpiralTestFragment();
         Bundle args = new Bundle();
         args.putString(SIDE_KEY, side);
         args.putString(DIFFICULTY_KEY, difficulty);
+        args.putBoolean(MODE_KEY, isPractice);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,16 +65,17 @@ public class SpiralTestFragment extends Fragment{
         activity = getActivity();
         view = inflater.inflate(R.layout.fragment_spiral_test, container, false);
         button = (Button)view.findViewById(R.id.finish);
-        Bundle bundle = getArguments();
         side = getArguments().getString(SIDE_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
+        isPractice = getArguments().getBoolean(MODE_KEY);
 
         text = (TextView) view.findViewById(R.id.roundText);
         drawView = (DrawingView) view.findViewById(R.id.drawView);
         original = (ImageView)view.findViewById(R.id.spiral);
 
+
         // Select spiral depending on difficulty
-        switch(difficulty) {
+        switch (difficulty) {
             case "easy":
                 timer_length = 10000;
                 original.setImageResource(R.drawable.easy_spiral);
@@ -94,39 +98,50 @@ public class SpiralTestFragment extends Fragment{
             original.setScaleX(-1);
         }
 
-        timer = new CountDownTimer(timer_length,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                text.setText("Timer: " + millisUntilFinished/1000);
-            }
-
-            // once timer is completed, user should not be able to draw anymore
-            @Override
-            public void onFinish() {
-                text.setText("Time's up! Please click Finish.");
-                drawView.pause();
-            }
-        };
-
-        // starts timer when user begins drawing
-        drawView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(!started) {
-                    started = true;
-                    timer.start();
+        // if not in practice mode, allow timer and drawview listener to be set up
+        if (!isPractice) {
+            timer = new CountDownTimer(timer_length, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    text.setText("Timer: " + millisUntilFinished / 1000);
                 }
-                return false;
-            }
-        });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveDrawing();
-                // should redirect to the results page
-            }
-        });
+                // once timer is completed, user should not be able to draw anymore
+                @Override
+                public void onFinish() {
+                    text.setText("Time's up! Please click Finish.");
+                    drawView.pause();
+                }
+            };
+
+            // starts timer when user begins drawing
+            drawView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (!started) {
+                        started = true;
+                        timer.start();
+                    }
+                    return false;
+                }
+            });
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    saveDrawing();
+                    // TODO in trial mode: redirect to the results page
+                }
+            });
+        } else {
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // in practice mode: redirect to spiral test main activity
+                    activity.finish();
+                }
+            });
+        }
 
         return view;
 

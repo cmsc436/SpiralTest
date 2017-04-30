@@ -46,7 +46,7 @@ public class SpiralTest extends FragmentActivity {
             // show instruction then practice
         } else {
             // run unstructured trial; TODO: set params to remove time limit
-            SpiralTestFragment fragment = newInstance(side,difficulty);
+            SpiralTestFragment fragment = newInstance(true, side, difficulty);
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
         }
 
