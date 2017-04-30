@@ -22,9 +22,12 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
-import static cmsc436.umd.edu.spiraltest.MainActivity.DIFFICULTY_KEY;
-import static cmsc436.umd.edu.spiraltest.MainActivity.MODE_KEY;
-import static cmsc436.umd.edu.spiraltest.MainActivity.SIDE_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.DIFFICULTY_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.MODE_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.SIDE_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.ID_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.ROUND_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.TOTAL_ROUND_KEY;
 
 public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
@@ -38,7 +41,7 @@ public class SpiralTestFragment extends Fragment{
     private ImageView original;
     private View view;
     private String side;
-    private String difficulty;
+    private int difficulty;
     private DrawingView drawView;
     private int timer_length;
     private CountDownTimer timer;
@@ -50,11 +53,14 @@ public class SpiralTestFragment extends Fragment{
         //do nothing right now
     }
 
-    public static SpiralTestFragment newInstance(boolean isPractice, String side, String difficulty){
+    public static SpiralTestFragment newInstance(boolean isPractice, String side, int difficulty, Integer round, Integer totalRound, String patientId) {
         SpiralTestFragment fragment = new SpiralTestFragment();
         Bundle args = new Bundle();
         args.putString(SIDE_KEY, side);
-        args.putString(DIFFICULTY_KEY, difficulty);
+        args.putInt(DIFFICULTY_KEY, difficulty);
+        args.putInt(ROUND_KEY, round);
+        args.putInt(TOTAL_ROUND_KEY, totalRound);
+        args.putString(ID_KEY, patientId);
         args.putBoolean(MODE_KEY, isPractice);
         fragment.setArguments(args);
         return fragment;
@@ -66,8 +72,9 @@ public class SpiralTestFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_spiral_test, container, false);
         button = (Button)view.findViewById(R.id.finish);
         side = getArguments().getString(SIDE_KEY);
-        difficulty = getArguments().getString(DIFFICULTY_KEY);
+        difficulty = getArguments().getInt(DIFFICULTY_KEY);
         isPractice = getArguments().getBoolean(MODE_KEY);
+
 
         text = (TextView) view.findViewById(R.id.roundText);
         drawView = (DrawingView) view.findViewById(R.id.drawView);
@@ -76,12 +83,12 @@ public class SpiralTestFragment extends Fragment{
 
         // Select spiral depending on difficulty
         switch (difficulty) {
-            case "easy":
+            case 1:
                 timer_length = 10000;
                 original.setImageResource(R.drawable.easy_spiral);
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
-            case "hard":
+            case 3:
                 timer_length = 20000;
                 original.setImageResource(R.drawable.hard_spiral);
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);

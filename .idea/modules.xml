@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/SpiralTest.iml" filepath="$PROJECT_DIR$/SpiralTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/frontendhelper-release/frontendhelper-release.iml" filepath="$PROJECT_DIR$/frontendhelper-release/frontendhelper-release.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sheets436-0.0.5-release/sheets436-0.0.5-release.iml" filepath="$PROJECT_DIR$/sheets436-0.0.5-release/sheets436-0.0.5-release.iml" />
     </modules>
   </component>
 </project>
