@@ -40,7 +40,7 @@ public class SpiralTestFragment extends Fragment{
     private String side;
     private String difficulty;
     private DrawingView drawView;
-    private Integer timer_length;
+    private int timer_length;
     private CountDownTimer timer;
     private TextView text;
     private boolean started = false;
