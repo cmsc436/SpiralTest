@@ -69,7 +69,7 @@ public class SpiralTest extends FragmentActivity {
 
         } else {
             testType = TEST_TYPE_PRACTICE;
-            SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, null, null, null);
+            SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
         }
 

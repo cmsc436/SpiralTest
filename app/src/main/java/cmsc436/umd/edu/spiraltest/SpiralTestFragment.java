@@ -53,7 +53,7 @@ public class SpiralTestFragment extends Fragment{
         //do nothing right now
     }
 
-    public static SpiralTestFragment newInstance(boolean isPractice, String side, int difficulty, Integer round, Integer totalRound, String patientId) {
+    public static SpiralTestFragment newInstance(boolean isPractice, String side, int difficulty, int round, int totalRound, String patientId) {
         SpiralTestFragment fragment = new SpiralTestFragment();
         Bundle args = new Bundle();
         args.putString(SIDE_KEY, side);
