@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
+import edu.umd.cmsc436.sheets.Sheets;
+
 import static cmsc436.umd.edu.spiraltest.SpiralTest.DIFFICULTY_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.MODE_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.SIDE_KEY;
@@ -48,6 +50,9 @@ public class SpiralTestFragment extends Fragment{
     private TextView text;
     private boolean started = false;
     private boolean isPractice;
+    private int round;
+    private int totalRounds;
+    private TextView roundText;
 
     public interface OnFinishListener{
         //do nothing right now
@@ -74,9 +79,11 @@ public class SpiralTestFragment extends Fragment{
         side = getArguments().getString(SIDE_KEY);
         difficulty = getArguments().getInt(DIFFICULTY_KEY);
         isPractice = getArguments().getBoolean(MODE_KEY);
+        round = getArguments().getInt(ROUND_KEY);
+        totalRounds = getArguments().getInt(TOTAL_ROUND_KEY);
 
-
-        text = (TextView) view.findViewById(R.id.roundText);
+        roundText = (TextView)view.findViewById(R.id.roundText);
+        text = (TextView) view.findViewById(R.id.timerText);
         drawView = (DrawingView) view.findViewById(R.id.drawView);
         original = (ImageView)view.findViewById(R.id.spiral);
 
@@ -101,12 +108,13 @@ public class SpiralTestFragment extends Fragment{
         }
 
         // flip the spiral horizontally if left handed
-        if (side.equals("left")) {
+        if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
             original.setScaleX(-1);
         }
 
         // if not in practice mode, allow timer and drawview listener to be set up
         if (!isPractice) {
+            roundText.setText("Round " + round + " of " + totalRounds);
             timer = new CountDownTimer(timer_length, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -136,11 +144,14 @@ public class SpiralTestFragment extends Fragment{
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    timer.cancel();
+                    text.setText("Round Complete!");
                     saveDrawing();
                     // TODO in trial mode: redirect to the results page
                 }
             });
         } else {
+            roundText.setText("Practice Round");
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
