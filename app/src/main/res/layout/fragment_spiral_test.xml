@@ -18,6 +18,14 @@
         android:layout_centerHorizontal="true"
         android:textSize="26dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="22dp"
+        android:id="@+id/timerText"
+        android:layout_below="@+id/roundText"/>
+
     <cmsc436.umd.edu.spiraltest.DrawingView
         android:id="@+id/drawView"
         android:layout_width="fill_parent"
@@ -54,5 +62,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:alpha="0.5" />
+
 
 </RelativeLayout>

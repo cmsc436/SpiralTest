@@ -22,11 +22,18 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
+import edu.umd.cmsc436.sheets.Sheets;
+
+import static cmsc436.umd.edu.spiraltest.SpiralTest.DIFFICULTY_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.MODE_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.SIDE_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.ID_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.ROUND_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.TOTAL_ROUND_KEY;
+
 public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
     private static final int PERMISSION_REQUEST_CODE = 1;
-    public static final String HAND_KEY = "HAND_KEY";
-    public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
     public static final int EASY_TRACE_SIZE = 50;
     public static final int MEDIUM_TRACE_SIZE = 40;
     public static final int HARD_TRACE_SIZE = 30;
@@ -36,22 +43,30 @@ public class SpiralTestFragment extends Fragment{
     private ImageView original;
     private View view;
     private String side;
-    private String difficulty;
+    private int difficulty;
     private DrawingView drawView;
     private int timer_length;
     private CountDownTimer timer;
     private TextView text;
     private boolean started = false;
+    private boolean isPractice;
+    private int round;
+    private int totalRounds;
+    private TextView roundText;
 
     public interface OnFinishListener{
         //do nothing right now
     }
 
-    public static SpiralTestFragment newInstance(String side, String difficulty){
+    public static SpiralTestFragment newInstance(boolean isPractice, String side, int difficulty, int round, int totalRound, String patientId) {
         SpiralTestFragment fragment = new SpiralTestFragment();
         Bundle args = new Bundle();
-        args.putString(HAND_KEY, side);
-        args.putString(DIFFICULTY_KEY, difficulty);
+        args.putString(SIDE_KEY, side);
+        args.putInt(DIFFICULTY_KEY, difficulty);
+        args.putInt(ROUND_KEY, round);
+        args.putInt(TOTAL_ROUND_KEY, totalRound);
+        args.putString(ID_KEY, patientId);
+        args.putBoolean(MODE_KEY, isPractice);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,22 +76,26 @@ public class SpiralTestFragment extends Fragment{
         activity = getActivity();
         view = inflater.inflate(R.layout.fragment_spiral_test, container, false);
         button = (Button)view.findViewById(R.id.finish);
-        Bundle bundle = getArguments();
-        side = getArguments().getString(HAND_KEY);
-        difficulty = getArguments().getString(DIFFICULTY_KEY);
+        side = getArguments().getString(SIDE_KEY);
+        difficulty = getArguments().getInt(DIFFICULTY_KEY);
+        isPractice = getArguments().getBoolean(MODE_KEY);
+        round = getArguments().getInt(ROUND_KEY);
+        totalRounds = getArguments().getInt(TOTAL_ROUND_KEY);
 
-        text = (TextView) view.findViewById(R.id.roundText);
+        roundText = (TextView)view.findViewById(R.id.roundText);
+        text = (TextView) view.findViewById(R.id.timerText);
         drawView = (DrawingView) view.findViewById(R.id.drawView);
         original = (ImageView)view.findViewById(R.id.spiral);
 
+
         // Select spiral depending on difficulty
-        switch(difficulty) {
-            case "easy":
+        switch (difficulty) {
+            case 1:
                 timer_length = 10000;
                 original.setImageResource(R.drawable.easy_spiral);
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
-            case "hard":
+            case 3:
                 timer_length = 20000;
                 original.setImageResource(R.drawable.hard_spiral);
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
@@ -89,43 +108,58 @@ public class SpiralTestFragment extends Fragment{
         }
 
         // flip the spiral horizontally if left handed
-        if (side.equals("left")) {
+        if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
             original.setScaleX(-1);
         }
 
-        timer = new CountDownTimer(timer_length,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                text.setText("Timer: " + millisUntilFinished/1000);
-            }
-
-            // once timer is completed, user should not be able to draw anymore
-            @Override
-            public void onFinish() {
-                text.setText("Time's up! Please click Finish.");
-                drawView.pause();
-            }
-        };
-
-        // starts timer when user begins drawing
-        drawView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(!started) {
-                    started = true;
-                    timer.start();
+        // if not in practice mode, allow timer and drawview listener to be set up
+        if (!isPractice) {
+            roundText.setText("Round " + round + " of " + totalRounds);
+            timer = new CountDownTimer(timer_length, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    text.setText("Timer: " + millisUntilFinished / 1000);
                 }
-                return false;
-            }
-        });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveDrawing();
-                // should redirect to the results page
-            }
-        });
+                // once timer is completed, user should not be able to draw anymore
+                @Override
+                public void onFinish() {
+                    text.setText("Time's up! Please click Finish.");
+                    drawView.pause();
+                }
+            };
+
+            // starts timer when user begins drawing
+            drawView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (!started) {
+                        started = true;
+                        timer.start();
+                    }
+                    return false;
+                }
+            });
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    timer.cancel();
+                    text.setText("Round Complete!");
+                    saveDrawing();
+                    // TODO in trial mode: redirect to the results page
+                }
+            });
+        } else {
+            roundText.setText("Practice Round");
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // in practice mode: redirect to spiral test main activity
+                    activity.finish();
+                }
+            });
+        }
 
         return view;
 

@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    tools:context="cmsc436.umd.edu.spiraltest.SpiralInstructionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quick Instructions: "
+        android:textSize="26dp"
+        android:id="@+id/titleText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleText"
+        android:layout_marginTop="10dp"
+        android:text="\tTrace over the gray spiral with your finger as quickly and precisely as you can. As soon as you start tracing the spiral a timer will begin counting down and the time will be displayed at the top of the screen. Once you have finished, tap the finish button to stop the timer and end the round."
+        android:textSize="20dp"
+        android:id="@+id/instructionText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="More About the Test: "
+        android:layout_marginTop="15dp"
+        android:textSize="26dp"
+        android:layout_below="@+id/instructionText"
+        android:id="@+id/titleText2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutText"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/titleText2"
+        android:text="\tEach round will run for 10-20 seconds on an easy, medium, or hard spiral based on difficulty. Your final score will factor in your accuracy and the time that it took for you to trace the spiral."/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/aboutText"
+        android:layout_marginTop="10dp"
+        android:text="Start Practice"
+        android:textSize="22dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/startButton"/>
+
+
+</RelativeLayout>
