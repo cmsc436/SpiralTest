@@ -2,7 +2,9 @@ package cmsc436.umd.edu.spiraltest;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -27,9 +29,9 @@ public class SpiralTestFragment extends Fragment{
     private static final int PERMISSION_REQUEST_CODE = 1;
     public static final String HAND_KEY = "HAND_KEY";
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
-    public static final int EASY_TRACE_SIZE = 50;
-    public static final int MEDIUM_TRACE_SIZE = 40;
-    public static final int HARD_TRACE_SIZE = 30;
+    public static final int EASY_TRACE_SIZE = 60;
+    public static final int MEDIUM_TRACE_SIZE = 50;
+    public static final int HARD_TRACE_SIZE = 40;
 
     private Activity activity;
     private Button button;
@@ -38,14 +40,34 @@ public class SpiralTestFragment extends Fragment{
     private String side;
     private String difficulty;
     private DrawingView drawView;
-    private int timer_length;
     private CountDownTimer timer;
     private TextView text;
     private boolean started = false;
 
+    // [0] = time allotted
+    // [1] = time spent
+    // [2] = time remaining
+    private long[] time;
+
+    // [0] = overall score
+    // [1] = correctly drawn/total drawn
+    // [2] = pixels missed on original spiral
+    // [3] = duration
+    private Float[] results;
+
     public interface OnFinishListener{
         //do nothing right now
     }
+
+    /*
+    * For whoever is doing the sheets:
+    * >> Should be sending the results array to the trial sheet
+    * >> For the centralized shared google sheet, send results[0]
+    * >> gluck with figuring out how to send the images.
+    *       probably a good idea to change the file name to include the date
+    * */
+
+
 
     public static SpiralTestFragment newInstance(String side, String difficulty){
         SpiralTestFragment fragment = new SpiralTestFragment();
@@ -64,6 +86,8 @@ public class SpiralTestFragment extends Fragment{
         Bundle bundle = getArguments();
         side = getArguments().getString(HAND_KEY);
         difficulty = getArguments().getString(DIFFICULTY_KEY);
+        time = new long[3];
+        results = new Float[6];
 
         text = (TextView) view.findViewById(R.id.roundText);
         drawView = (DrawingView) view.findViewById(R.id.drawView);
@@ -72,17 +96,17 @@ public class SpiralTestFragment extends Fragment{
         // Select spiral depending on difficulty
         switch(difficulty) {
             case "easy":
-                timer_length = 10000;
+                time[0] = 10000;
                 original.setImageResource(R.drawable.easy_spiral);
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
             case "hard":
-                timer_length = 20000;
+                time[0] = 20000;
                 original.setImageResource(R.drawable.hard_spiral);
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
             default:
-                timer_length = 15000;
+                time[0] = 15000;
                 original.setImageResource(R.drawable.medium_spiral);
                 drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
@@ -93,10 +117,12 @@ public class SpiralTestFragment extends Fragment{
             original.setScaleX(-1);
         }
 
-        timer = new CountDownTimer(timer_length,1000) {
+        timer = new CountDownTimer(time[0],1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 text.setText("Timer: " + millisUntilFinished/1000);
+                time[1] = time[0] - millisUntilFinished;
+                time[2] = millisUntilFinished;
             }
 
             // once timer is completed, user should not be able to draw anymore
@@ -119,16 +145,79 @@ public class SpiralTestFragment extends Fragment{
             }
         });
 
+        // User finishes the test
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawView.pause();
+
+                results[1] = computeAccuracy(); // accuracy/missed
+                results[3] = (float)time[1]; // duration
+                results[0] = computeScore(); // overall score
+
+                // display the overall score on the bottom of the screen so its included in screenshot
+                ((TextView)view.findViewById(R.id.score)).setText("Score: " + results[0]);
+
                 saveDrawing();
-                // should redirect to the results page
+                timer.cancel();
             }
         });
 
         return view;
 
+    }
+
+    // 100% accuracy + 20% extra time remaining
+    // initially, accuracy = 50% part of original spiral that is drawn over + 50% accurate pixels among all pixels drawn
+    // but having some issues with the accuracy of portion of original spiral that is covered
+    public float computeScore() {
+        return (float)(results[1] + (time[2]/time[0])*20);
+//        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*20);
+    }
+
+    public float computeAccuracy() {
+        // convert original ImageView into a Bitmap
+        original.setDrawingCacheEnabled(true);
+        Bitmap origbit = original.getDrawingCache();
+        drawView.setDrawingCacheEnabled(true);
+        Bitmap drawbit = drawView.getDrawingCache();
+
+        // Retrieve pixel data in the form of an array for the original spiral and drawn spiral
+        int width = origbit.getWidth();
+        int height = origbit.getHeight();
+        int[] origpixels = new int[width*height];
+        int[] drawpixels = new int[width*height];
+        origbit.getPixels(origpixels,0,width,1,1,width-1,height-1);
+        drawbit.getPixels(drawpixels,0,width,1,1,width-1,height-1);
+
+        float totalDrawn = 0;
+        float totalAccurate = 0;
+        float missed = 0;
+        float totalOrig = 0;
+        float score;
+
+        // calculates accuracy and tracks non-traced parts of original
+        for(int i = 0; i < width*height; i++) {
+            if(drawpixels[i] != 0) {
+                if(origpixels[i] != 0) {
+                    totalOrig++;
+                    totalAccurate++;
+                }
+                totalDrawn++;
+            } else if (origpixels[i] != 0) {
+                missed++;
+                totalOrig++;
+            }
+        }
+
+        if (totalDrawn == 0) {
+            score = 0;
+        } else {
+            score = totalAccurate*100/totalDrawn;
+            results[2] = missed*100/totalOrig;
+        }
+
+        return score;
     }
 
     @Override

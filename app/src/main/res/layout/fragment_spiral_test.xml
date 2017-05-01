@@ -44,15 +44,24 @@
         android:layout_below="@+id/roundText"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
-        android:textSize="24dp" />
+        android:textSize="30dp" />
 
     <ImageView
         android:id="@+id/spiral"
-        android:layout_width="600dp"
-        android:layout_height="600dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:alpha="0.5" />
+
+    <TextView
+        android:id="@+id/score"
+        android:textSize="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/finish"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"/>
 
 </RelativeLayout>
