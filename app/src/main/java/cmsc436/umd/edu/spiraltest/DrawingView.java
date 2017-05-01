@@ -3,6 +3,7 @@ package cmsc436.umd.edu.spiraltest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -87,6 +88,13 @@ public class DrawingView extends View {
 
     public void clear() {
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+    }
+
+    public void displayScore(float score) {
+        Paint scoreColor = new Paint();
+        scoreColor.setColor(Color.BLACK);
+        scoreColor.setTextSize(80);
+        drawCanvas.drawText("Score: " + score, (float)drawCanvas.getWidth()/8,(float)drawCanvas.getHeight()*7/8,scoreColor);
     }
 }
 

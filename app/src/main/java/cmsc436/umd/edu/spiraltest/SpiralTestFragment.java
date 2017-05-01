@@ -149,14 +149,12 @@ public class SpiralTestFragment extends Fragment{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawView.pause();
-
                 results[1] = computeAccuracy(); // accuracy/missed
                 results[3] = (float)time[1]; // duration
                 results[0] = computeScore(); // overall score
 
                 // display the overall score on the bottom of the screen so its included in screenshot
-                ((TextView)view.findViewById(R.id.score)).setText("Score: " + results[0]);
+                drawView.displayScore(results[0]);
 
                 saveDrawing();
                 timer.cancel();
@@ -231,7 +229,6 @@ public class SpiralTestFragment extends Fragment{
     }
 
     public void saveDrawing(){
-        view = this.getView();
         if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSION_REQUEST_CODE);
         } else {
