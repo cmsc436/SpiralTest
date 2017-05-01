@@ -92,24 +92,31 @@ public class SpiralTestFragment extends Fragment{
         switch (difficulty) {
             case 1:
                 timer_length = 10000;
-                original.setImageResource(R.drawable.easy_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.easy_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.easy_spiral_r);
+                }
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
             case 3:
                 timer_length = 20000;
-                original.setImageResource(R.drawable.hard_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.hard_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.hard_spiral_r);
+                }
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
             default:
                 timer_length = 15000;
-                original.setImageResource(R.drawable.medium_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.medium_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.medium_spiral_r);
+                }
                 drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
-        }
-
-        // flip the spiral horizontally if left handed
-        if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
-            original.setScaleX(-1);
         }
 
         // if not in practice mode, allow timer and drawview listener to be set up
