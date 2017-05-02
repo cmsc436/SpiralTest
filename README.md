@@ -1,6 +1,6 @@
 # SpiralTest
 
-The Spiral Test has 2 modes, a practice mode and a trial mode. In the practice mode, the user will be able to try out the test to see how it works with no time limit. In trial mode, the user will have 10 seconds to draw the spiral. A help mode is also available in case the user needs to review the instructions.
+The Spiral Test has 2 modes, a practice mode and a trial mode. In the practice mode, the user will be able to try out the test to see how it works with no time limit. In trial mode, the user will have a set time limit to draw the spiral. The amount of time depends on the difficulty level (10 seconds for Easy, 15 seconds for Medium, and 20 seconds for Hard). A help mode is also available in case the user needs to review the instructions.
 
 # Researcher instructions: 
 
