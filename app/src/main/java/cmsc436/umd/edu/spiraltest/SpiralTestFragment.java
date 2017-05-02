@@ -315,8 +315,11 @@ public class SpiralTestFragment extends Fragment{
         String currentDateTimeString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         //apparently we don't need to send anything to class for now.
 //        ((SpiralTest)getActivity()).sendToClassSheet(patientID,side,results[0]);
-        ((SpiralTest)getActivity()).sendToGroupSheet(patientID,side,results);
-        ((SpiralTest)getActivity()).sendToDrive(patientID + " " + currentDateTimeString,bitmap);
+//        ((SpiralTest)getActivity()).sendToGroupSheet(patientID,side,results);
+
+//        ((SpiralTest)getActivity()).sendToDrive(patientID + " " + currentDateTimeString,bitmap);
+        ((SpiralTest)getActivity()).sendToDrive(patientID,bitmap);
+
     }
 }
 
