@@ -61,8 +61,8 @@ public class SpiralTest extends FragmentActivity implements SpiralInstructionFra
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
 
         } else {
-//            SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
-            SpiralTestFragment fragment = newInstance(false, TestType.LH_SPIRAL.toId(), DEFAULT_DIFFICULTY, 1, 3, "user123"); // test TRIAL mode
+            SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
+//            SpiralTestFragment fragment = newInstance(false, TestType.LH_SPIRAL.toId(), DEFAULT_DIFFICULTY, 1, 3, "user123"); // test TRIAL mode
 //            SpiralInstructionFragment fragment = new SpiralInstructionFragment(); // test HELP mode
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
         }
