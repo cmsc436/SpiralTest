@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 import edu.umd.cmsc436.sheets.Sheets;
@@ -48,6 +53,7 @@ public class SpiralTestFragment extends Fragment{
     private ImageView original;
     private View view;
     private String side;
+    private String patientID;
     private int difficulty;
     private DrawingView drawView;
     private CountDownTimer timer;
@@ -67,7 +73,7 @@ public class SpiralTestFragment extends Fragment{
     // [1] = correctly drawn/total drawn
     // [2] = pixels missed on original spiral
     // [3] = duration
-    private Float[] results;
+    private float[] results;
 
     public interface OnFinishListener{
         //do nothing right now
@@ -102,6 +108,7 @@ public class SpiralTestFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_spiral_test, container, false);
         button = (Button)view.findViewById(R.id.finish);
         side = getArguments().getString(SIDE_KEY);
+        patientID = getArguments().getString(ID_KEY);
         difficulty = getArguments().getInt(DIFFICULTY_KEY);
 
         isPractice = getArguments().getBoolean(MODE_KEY);
@@ -109,7 +116,7 @@ public class SpiralTestFragment extends Fragment{
         totalRounds = getArguments().getInt(TOTAL_ROUND_KEY);
 
         time = new long[3];
-        results = new Float[6];
+        results = new float[4];
 
         roundText = (TextView)view.findViewById(R.id.roundText);
         text = (TextView) view.findViewById(R.id.timerText);
@@ -185,9 +192,12 @@ public class SpiralTestFragment extends Fragment{
 
                     // display the overall score on the bottom of the screen so its included in screenshot
                     drawView.displayScore(results[0]);
+                    Log.d("sheets stuff", String.valueOf(results[0]));
 
                     text.setText("Round Complete!");
-                    saveDrawing();
+                    Bitmap b = saveDrawing();
+                    //sendToSheet
+                    beginSheetResponse(b);
                     // TODO in trial mode: redirect to the results page
                 }
             });
@@ -269,12 +279,14 @@ public class SpiralTestFragment extends Fragment{
         }
     }
 
-    public void saveDrawing(){
+    public Bitmap saveDrawing(){
+        Bitmap bitmap = null;
         if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSION_REQUEST_CODE);
         } else {
+            bitmap = screenShot(view);
             String imgSaved = MediaStore.Images.Media.insertImage(
-                    activity.getContentResolver(), screenShot(view),
+                    activity.getContentResolver(), bitmap,
                     UUID.randomUUID().toString() + ".png", "drawing");
             if (imgSaved != null) {
                 Toast savedToast = Toast.makeText(activity.getApplicationContext(),
@@ -287,8 +299,8 @@ public class SpiralTestFragment extends Fragment{
             }
             drawView.destroyDrawingCache();
         }
-
         drawView.clear();
+        return bitmap;
     }
 
     public Bitmap screenShot(View view) {
@@ -297,6 +309,14 @@ public class SpiralTestFragment extends Fragment{
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         return bitmap;
+    }
+
+    private void beginSheetResponse(Bitmap bitmap){
+        String currentDateTimeString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+        //apparently we don't need to send anything to class for now.
+//        ((SpiralTest)getActivity()).sendToClassSheet(patientID,side,results[0]);
+        ((SpiralTest)getActivity()).sendToGroupSheet(patientID,side,results);
+        ((SpiralTest)getActivity()).sendToDrive(patientID + " " + currentDateTimeString,bitmap);
     }
 }
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SpiralTest</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="class_sheet">1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU</string>
+    <string name="trial_sheet">1ZQ6lvFCCWVSOn-c48IIMDi3juG-Qu7iWwr3C05IIh6c</string>
+    <string name="spiral_folder">0B4BQLgmAZePWVU5HQlhaeUJ4ems</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
