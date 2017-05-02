@@ -194,6 +194,7 @@ public class SpiralTestFragment extends Fragment{
 
                     text.setText("Round Complete!");
                     saveDrawing();
+                    activity.finish();
                 }
             });
         } else {
