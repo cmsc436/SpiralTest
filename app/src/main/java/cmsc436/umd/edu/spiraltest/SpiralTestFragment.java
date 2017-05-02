@@ -279,7 +279,9 @@ public class SpiralTestFragment extends Fragment{
     public void saveDrawing(){
         if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSION_REQUEST_CODE);
-        } else {
+        }
+
+        if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             String imgSaved = MediaStore.Images.Media.insertImage(
                     activity.getContentResolver(), screenShot(view),
                     UUID.randomUUID().toString() + ".png", "drawing");
@@ -293,6 +295,8 @@ public class SpiralTestFragment extends Fragment{
                 unsavedToast.show();
             }
             drawView.destroyDrawingCache();
+        } else {
+            Toast.makeText(activity.getApplicationContext(),"Unable to save image because permission denied", Toast.LENGTH_SHORT).show();
         }
 
         drawView.clear();
