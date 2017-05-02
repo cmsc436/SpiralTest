@@ -26,7 +26,6 @@ import java.util.UUID;
 
 import edu.umd.cmsc436.sheets.Sheets;
 
-import static cmsc436.umd.edu.spiraltest.SpiralTest.DIFFICULTY_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.MODE_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.SIDE_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.ID_KEY;
@@ -36,7 +35,7 @@ import static cmsc436.umd.edu.spiraltest.SpiralTest.TOTAL_ROUND_KEY;
 public class SpiralTestFragment extends Fragment{
     private OnFinishListener callback;
     private static final int PERMISSION_REQUEST_CODE = 1;
-    public static final String HAND_KEY = "HAND_KEY";
+
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
     public static final int EASY_TRACE_SIZE = 60;
     public static final int MEDIUM_TRACE_SIZE = 50;
@@ -122,24 +121,31 @@ public class SpiralTestFragment extends Fragment{
         switch (difficulty) {
             case 1:
                 time[0] = 10000;
-                original.setImageResource(R.drawable.easy_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.easy_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.easy_spiral_r);
+                }
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
             case 3:
                 time[0] = 20000;
-                original.setImageResource(R.drawable.hard_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.hard_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.hard_spiral_r);
+                }
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
             default:
                 time[0] = 15000;
-                original.setImageResource(R.drawable.medium_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.medium_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.medium_spiral_r);
+                }
                 drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
-        }
-
-        // flip the spiral horizontally if left handed
-        if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
-            original.setScaleX(-1);
         }
 
         // if not in practice mode, allow timer and drawview listener to be set up
@@ -188,7 +194,6 @@ public class SpiralTestFragment extends Fragment{
 
                     text.setText("Round Complete!");
                     saveDrawing();
-                    // TODO in trial mode: redirect to the results page
                 }
             });
         } else {
@@ -206,12 +211,13 @@ public class SpiralTestFragment extends Fragment{
 
     }
 
-    // 100% accuracy + 20% extra time remaining
-    // initially, accuracy = 50% part of original spiral that is drawn over + 50% accurate pixels among all pixels drawn
-    // but having some issues with the accuracy of portion of original spiral that is covered
+    // 100% accuracy + 30% extra time remaining
+    // accuracy = 50% part of original spiral that is drawn over + 50% accurate pixels among all pixels drawn
     public float computeScore() {
-        return (float)(results[1] + (time[2]/time[0])*20);
-//        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*20);
+//        return (float)(100 - results[2]);
+//        return (float)(results[1]);
+//        return (float)(results[1] + (time[2]/time[0])*20);
+        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*30);
     }
 
     public float computeAccuracy() {
