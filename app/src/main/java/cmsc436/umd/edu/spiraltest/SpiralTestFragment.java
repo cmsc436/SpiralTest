@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -194,6 +195,11 @@ public class SpiralTestFragment extends Fragment{
 
                     text.setText("Round Complete!");
                     saveDrawing();
+
+                    // send result to front end
+                    Intent data = new Intent();
+                    data.putExtra("score",results[0]);
+                    activity.setResult(Activity.RESULT_OK,data);
                     activity.finish();
                 }
             });

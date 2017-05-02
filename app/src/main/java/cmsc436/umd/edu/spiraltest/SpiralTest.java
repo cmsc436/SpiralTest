@@ -1,5 +1,6 @@
 package cmsc436.umd.edu.spiraltest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -59,7 +60,6 @@ public class SpiralTest extends FragmentActivity implements SpiralInstructionFra
             // run instruction fragment then practice
             SpiralInstructionFragment fragment = new SpiralInstructionFragment();
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
-
         } else {
             SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
 //            SpiralTestFragment fragment = newInstance(false, TestType.LH_SPIRAL.toId(), DEFAULT_DIFFICULTY, 1, 3, "user123"); // test TRIAL mode
@@ -70,7 +70,8 @@ public class SpiralTest extends FragmentActivity implements SpiralInstructionFra
 
     @Override
     public void onBackPressed() {
-        // disable back button
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
     public void startPractice() {
