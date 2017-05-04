@@ -1,8 +1,11 @@
 package cmsc436.umd.edu.spiraltest;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,6 +36,7 @@ public class SpiralTest extends FragmentActivity implements
     public static final String MODE_KEY = "MODE_KEY";
     private static final String DEFAULT_SIDE = TestType.RH_SPIRAL.toId();
     private static final int DEFAULT_DIFFICULTY = 1;
+    private static final int PERMISSION_REQUEST_CODE = 1;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private String side;
@@ -51,8 +55,9 @@ public class SpiralTest extends FragmentActivity implements
         Intent intent = getIntent();
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
-
-
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
 
         if (intent.getAction().equals("edu.umd.cmsc436.spiral.action.TRIAL")) {
             side = getAppendage(intent).toId();

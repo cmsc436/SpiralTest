@@ -289,7 +289,9 @@ public class SpiralTestFragment extends Fragment{
     public Bitmap saveDrawing(){
         Bitmap bitmap = null;
         if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSION_REQUEST_CODE);
+            Toast permToast = Toast.makeText(activity.getApplicationContext(),
+                    "Oops! Permission to save not granted.", Toast.LENGTH_SHORT);
+            permToast.show();
         } else {
             bitmap = screenShot(view);
             String imgSaved = MediaStore.Images.Media.insertImage(
