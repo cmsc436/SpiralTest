@@ -129,17 +129,29 @@ public class SpiralTestFragment extends Fragment{
         switch (difficulty) {
             case 1:
                 time[0] = 10000;
-                original.setImageResource(R.drawable.easy_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.easy_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.easy_spiral_r);
+                }
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
             case 3:
                 time[0] = 20000;
-                original.setImageResource(R.drawable.hard_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.hard_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.hard_spiral_r);
+                }
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
             default:
                 time[0] = 15000;
-                original.setImageResource(R.drawable.medium_spiral);
+                if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
+                    original.setImageResource(R.drawable.medium_spiral_l);
+                } else {
+                    original.setImageResource(R.drawable.medium_spiral_r);
+                }
                 drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
         }
@@ -220,8 +232,8 @@ public class SpiralTestFragment extends Fragment{
     // initially, accuracy = 50% part of original spiral that is drawn over + 50% accurate pixels among all pixels drawn
     // but having some issues with the accuracy of portion of original spiral that is covered
     public float computeScore() {
-        return (float)(results[1] + (time[2]/time[0])*20);
-//        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*20);
+//        return (float)(results[1] + (time[2]/time[0])*20);
+        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*30);
     }
 
     public float computeAccuracy() {

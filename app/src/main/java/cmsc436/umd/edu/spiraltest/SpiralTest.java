@@ -32,7 +32,7 @@ public class SpiralTest extends FragmentActivity implements
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
     public static final String MODE_KEY = "MODE_KEY";
     private static final String DEFAULT_SIDE = TestType.RH_SPIRAL.toId();
-    private static final int DEFAULT_DIFFICULTY = 2;
+    private static final int DEFAULT_DIFFICULTY = 1;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private String side;
