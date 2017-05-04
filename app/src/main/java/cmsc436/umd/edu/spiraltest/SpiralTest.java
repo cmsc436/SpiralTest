@@ -60,8 +60,8 @@ public class SpiralTest extends FragmentActivity implements
             trialNum = getTrialNum(intent);
             totalTrials = getTrialOutOf(intent);
             patientId = getPatientId(intent);
-            sheet = new Sheets(this, this, getString(R.string.app_name),"1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU",
-                    "1ZQ6lvFCCWVSOn-c48IIMDi3juG-Qu7iWwr3C05IIh6c");
+            sheet = new Sheets(this, this, getString(R.string.app_name),getString(R.string.class_sheet),
+                    getString(R.string.trial_sheet));
             // run trial fragment
             SpiralTestFragment fragment = newInstance(false, side, difficulty, trialNum, totalTrials, patientId);
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
@@ -75,8 +75,8 @@ public class SpiralTest extends FragmentActivity implements
 
             //Test TRIAL Mode
             SpiralTestFragment fragment = newInstance(false, TestType.LH_SPIRAL.toId(), DEFAULT_DIFFICULTY, 1, 3, "user123");
-            sheet = new Sheets(this, this, getString(R.string.app_name),"1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU",
-                    "1ZQ6lvFCCWVSOn-c48IIMDi3juG-Qu7iWwr3C05IIh6c");
+            sheet = new Sheets(this, this, getString(R.string.app_name),getString(R.string.class_sheet),
+                    getString(R.string.trial_sheet));
 
 //            SpiralInstructionFragment fragment = new SpiralInstructionFragment(); // test HELP mode
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
@@ -143,7 +143,7 @@ public class SpiralTest extends FragmentActivity implements
 
     public void sendToDrive(String imageName,Bitmap bitmap){
         Log.i(getClass().getSimpleName(), "hsfashdjklas");
-        sheet.uploadToDrive("0B4BQLgmAZePWVU5HQlhaeUJ4ems", imageName, bitmap);
+        sheet.uploadToDrive(getString(R.string.spiral_folder), imageName, bitmap);
     };
 
     //apparently we don't need to send anything to class for now.
