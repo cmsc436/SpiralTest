@@ -205,6 +205,7 @@ public class SpiralTestFragment extends Fragment{
                     Bitmap b = saveDrawing();
                     //sendToSheet
                     beginSheetResponse(b);
+                    activity.finish();
                     // TODO in trial mode: redirect to the results page
                 }
             });
