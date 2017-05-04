@@ -156,11 +156,6 @@ public class SpiralTestFragment extends Fragment{
                 break;
         }
 
-        // flip the spiral horizontally if left handed
-        if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
-            original.setScaleX(-1);
-        }
-
         // if not in practice mode, allow timer and drawview listener to be set up
         if (!isPractice) {
             roundText.setText("Round " + round + " of " + totalRounds);
