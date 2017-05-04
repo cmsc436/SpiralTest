@@ -1,6 +1,7 @@
 package cmsc436.umd.edu.spiraltest;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -90,7 +91,11 @@ public class SpiralTest extends FragmentActivity implements
 
     @Override
     public void onBackPressed() {
-        // disable back button
+        // send result to front end
+        Intent data = new Intent();
+        data.putExtra("score",(float)0);
+        setResult(Activity.RESULT_CANCELED,data);
+        finish();
     }
 
     public void startPractice() {
