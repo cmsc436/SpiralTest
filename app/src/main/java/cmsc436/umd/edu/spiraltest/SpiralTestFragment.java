@@ -204,14 +204,14 @@ public class SpiralTestFragment extends Fragment{
 
                     text.setText("Round Complete!");
                     Bitmap b = saveDrawing();
+
+                    //send to front end
+                    ((SpiralTest)getActivity()).sendToFrontEnd(results[0]);
+
                     //sendToSheet
                     beginSheetResponse(b);
 
-                    // send result to front end
-                    Intent data = new Intent();
-                    data.putExtra("score",results[0]);
-                    activity.setResult(Activity.RESULT_OK,data);
-                    activity.finish();
+
                     // TODO in trial mode: redirect to the results page
                 }
             });

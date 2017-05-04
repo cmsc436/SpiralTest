@@ -77,12 +77,12 @@ public class SpiralTest extends FragmentActivity implements
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
 
         } else {
-//            SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
+            SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
 
             //Test TRIAL Mode
-            SpiralTestFragment fragment = newInstance(false, TestType.LH_SPIRAL.toId(), DEFAULT_DIFFICULTY, 1, 3, "user123");
-            sheet = new Sheets(this, this, getString(R.string.app_name),getString(R.string.class_sheet),
-                    getString(R.string.trial_sheet));
+//            SpiralTestFragment fragment = newInstance(false, TestType.LH_SPIRAL.toId(), DEFAULT_DIFFICULTY, 1, 3, "user123");
+//            sheet = new Sheets(this, this, getString(R.string.app_name),getString(R.string.class_sheet),
+//                    getString(R.string.trial_sheet));
 
 //            SpiralInstructionFragment fragment = new SpiralInstructionFragment(); // test HELP mode
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
@@ -91,11 +91,16 @@ public class SpiralTest extends FragmentActivity implements
 
     @Override
     public void onBackPressed() {
-        // send result to front end
         Intent data = new Intent();
         data.putExtra("score",(float)0);
         setResult(Activity.RESULT_CANCELED,data);
         finish();
+    }
+
+    public void sendToFrontEnd(float result) {
+        Intent data = new Intent();
+        data.putExtra("score",result);
+        setResult(Activity.RESULT_OK,data);
     }
 
     public void startPractice() {
@@ -128,6 +133,7 @@ public class SpiralTest extends FragmentActivity implements
             throw new RuntimeException(e);
         }
         Log.i(getClass().getSimpleName(), "Done");
+        finish();
     }
 
     @Override
@@ -152,7 +158,6 @@ public class SpiralTest extends FragmentActivity implements
     }
 
     public void sendToDrive(String imageName,Bitmap bitmap){
-        Log.i(getClass().getSimpleName(), "hsfashdjklas");
         sheet.uploadToDrive(getString(R.string.spiral_folder), imageName, bitmap);
     };
 
