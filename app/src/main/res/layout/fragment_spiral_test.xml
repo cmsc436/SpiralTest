@@ -34,9 +34,9 @@
         <ImageView
             android:id="@+id/spiral"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <!--android:tint="@color/colorBackground436"-->
-        <!--/>-->
+            android:layout_height="wrap_content"
+        android:tint="@color/colorAccent436"
+        />
 
         <cmsc436.umd.edu.spiraltest.DrawingView
             android:id="@+id/drawView"
