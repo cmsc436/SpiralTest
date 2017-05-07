@@ -14,11 +14,17 @@
     android:weightSum="1">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/instructions"
+        android:textSize="30dp" />
+
+    <TextView
         android:id="@+id/roundText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="26dp" />
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -35,8 +41,8 @@
             android:id="@+id/spiral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-        android:tint="@color/colorAccent436"
-        />
+            android:tint="@color/colorAccent436"
+            />
 
         <cmsc436.umd.edu.spiraltest.DrawingView
             android:id="@+id/drawView"
