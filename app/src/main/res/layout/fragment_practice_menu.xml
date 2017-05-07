@@ -5,15 +5,13 @@
     android:layout_centerHorizontal="true"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="10pt"
-    android:paddingRight="10pt"
-    android:paddingTop="10pt"
+
     tools:context="cmsc436.umd.edu.spiraltest.PracticeMenuFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="10pt"
+        android:paddingBottom="5pt"
         android:text="Select your practice settings"
         android:textAlignment="center"
         android:textSize="40sp" />
@@ -30,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -58,10 +56,10 @@
 
     <RadioGroup
         android:id="@+id/difficulty"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -93,8 +91,6 @@
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/difficulty"
-
         android:onClick="startTest"
         android:text="Begin Test"
         android:textSize="35sp" />
