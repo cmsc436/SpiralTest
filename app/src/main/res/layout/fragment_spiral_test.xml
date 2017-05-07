@@ -61,6 +61,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:alpha="0.5" />
+        android:alpha="0.6" />
 
 </RelativeLayout>

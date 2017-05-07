@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +31,7 @@ public class DrawingView extends View {
     private void setupDrawing(){
         drawPath = new Path();
         drawPaint = new Paint();
-        drawPaint.setColor(0xFFFF0000);
+        drawPaint.setColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
         drawPaint.setAntiAlias(true);
         drawPaint.setStrokeWidth(40);
         drawPaint.setStyle(Paint.Style.STROKE);
