@@ -14,24 +14,19 @@ import android.widget.Button;
  * A simple {@link Fragment} subclass.
  */
 public class SpiralInstructionFragment extends Fragment {
+    private Button doneButton;
 
-    private Button startButton;
-    private StartSpiralPracticeListener callback;
-
-    public interface StartSpiralPracticeListener {
-        public void startPractice();
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_spiral_instruction, container, false);
-        startButton = (Button)view.findViewById(R.id.startButton);
+        doneButton = (Button)view.findViewById(R.id.doneButton);
 
-        startButton.setOnClickListener(new View.OnClickListener() {
+        doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.startPractice();
+                getActivity().finish();
             }
         });
         return view;
@@ -40,11 +35,6 @@ public class SpiralInstructionFragment extends Fragment {
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
-        try {
-            callback = (StartSpiralPracticeListener)activity;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }
