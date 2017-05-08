@@ -317,7 +317,7 @@ public class SpiralTestFragment extends Fragment{
                     UUID.randomUUID().toString() + ".png", "drawing");
             if (imgSaved != null) {
                 Toast savedToast = Toast.makeText(activity.getApplicationContext(),
-                        "Drawing saved to Gallery! " + results[0], Toast.LENGTH_SHORT);
+                        "Drawing saved to Gallery! ", Toast.LENGTH_SHORT);
                 savedToast.show();
             } else {
                 Toast unsavedToast = Toast.makeText(activity.getApplicationContext(),
