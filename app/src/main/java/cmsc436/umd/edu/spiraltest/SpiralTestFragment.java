@@ -64,6 +64,7 @@ public class SpiralTestFragment extends Fragment{
     private int round;
     private int totalRounds;
     private TextView roundText;
+    private TextView instructions;
 
     // [0] = time allotted
     // [1] = time spent
@@ -121,6 +122,7 @@ public class SpiralTestFragment extends Fragment{
 
         roundText = (TextView)view.findViewById(R.id.roundText);
         text = (TextView) view.findViewById(R.id.timerText);
+        instructions = (TextView) view.findViewById(R.id.instructions);
 
         drawView = (DrawingView) view.findViewById(R.id.drawView);
         original = (ImageView)view.findViewById(R.id.spiral);
@@ -132,8 +134,10 @@ public class SpiralTestFragment extends Fragment{
                 time[0] = 10000;
                 if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
                     original.setImageResource(R.drawable.easy_spiral_l);
+                    instructions.setText("Left Hand");
                 } else {
                     original.setImageResource(R.drawable.easy_spiral_r);
+                    instructions.setText("Right Hand");
                 }
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
@@ -141,8 +145,10 @@ public class SpiralTestFragment extends Fragment{
                 time[0] = 20000;
                 if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
                     original.setImageResource(R.drawable.hard_spiral_l);
+                    instructions.setText("Left Hand");
                 } else {
                     original.setImageResource(R.drawable.hard_spiral_r);
+                    instructions.setText("Right Hand");
                 }
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
@@ -150,8 +156,10 @@ public class SpiralTestFragment extends Fragment{
                 time[0] = 15000;
                 if (side.equals(Sheets.TestType.LH_SPIRAL.toId())) {
                     original.setImageResource(R.drawable.medium_spiral_l);
+                    instructions.setText("Left Hand");
                 } else {
                     original.setImageResource(R.drawable.medium_spiral_r);
+                    instructions.setText("Right Hand");
                 }
                 drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
