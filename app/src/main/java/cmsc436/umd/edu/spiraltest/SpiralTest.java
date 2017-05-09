@@ -6,18 +6,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
-
 
 import edu.umd.cmsc436.sheets.Sheets;
 
-import static android.R.attr.fragment;
+import static cmsc436.umd.edu.spiraltest.ResultsFragment.newInstance;
 import static cmsc436.umd.edu.spiraltest.SpiralTestFragment.newInstance;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getDifficulty;
@@ -136,6 +134,13 @@ public class SpiralTest extends FragmentActivity implements
         finish();
     }
 
+    public void finishTest(float accuracy, float time, float score) {
+        ResultsFragment fragment = newInstance(accuracy, time, score);
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.commit();
+    }
+
     @Override
     public void onRequestPermissionsResult (int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         this.sheet.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -149,15 +154,15 @@ public class SpiralTest extends FragmentActivity implements
 
     public void sendToGroupSheet(String userId,String side, float[] trialData){
         if (side.indexOf("LH") != -1){
-            sheet.writeTrials(TestType.LH_SPIRAL,userId,trialData);
+//            sheet.writeTrials(TestType.LH_SPIRAL,userId,trialData);
         }else {
-            sheet.writeTrials(TestType.RH_SPIRAL,userId,trialData);
+//            sheet.writeTrials(TestType.RH_SPIRAL,userId,trialData);
         }
 
 
     }
 
-    public void sendToDrive(String imageName,Bitmap bitmap){
+    public void sendToDrive(String imageName,Bitmap bitmap) {
         sheet.uploadToDrive(getString(R.string.spiral_folder), imageName, bitmap);
     };
 

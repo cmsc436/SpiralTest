@@ -1,19 +1,15 @@
 package cmsc436.umd.edu.spiraltest;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -32,11 +27,10 @@ import java.util.UUID;
 
 import edu.umd.cmsc436.sheets.Sheets;
 
-import static cmsc436.umd.edu.spiraltest.SpiralTest.DIFFICULTY_KEY;
-import static cmsc436.umd.edu.spiraltest.SpiralTest.MODE_KEY;
-import static cmsc436.umd.edu.spiraltest.SpiralTest.SIDE_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.ID_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.MODE_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.ROUND_KEY;
+import static cmsc436.umd.edu.spiraltest.SpiralTest.SIDE_KEY;
 import static cmsc436.umd.edu.spiraltest.SpiralTest.TOTAL_ROUND_KEY;
 
 public class SpiralTestFragment extends Fragment{
@@ -49,7 +43,7 @@ public class SpiralTestFragment extends Fragment{
     public static final int HARD_TRACE_SIZE = 40;
 
 
-    private Activity activity;
+    private SpiralTest activity;
     private Button button;
     private ImageView original;
     private View view;
@@ -105,7 +99,7 @@ public class SpiralTestFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        activity = getActivity();
+        activity = (SpiralTest) getActivity();
         view = inflater.inflate(R.layout.fragment_spiral_test, container, false);
         button = (Button)view.findViewById(R.id.finish);
         side = getArguments().getString(SIDE_KEY);
@@ -211,6 +205,7 @@ public class SpiralTestFragment extends Fragment{
                     //sendToSheet
                     beginSheetResponse(b);
 
+                    activity.finishTest(results[1], results[3], results[0]);
 
                     // TODO in trial mode: redirect to the results page
                 }
@@ -287,7 +282,7 @@ public class SpiralTestFragment extends Fragment{
     public void onAttach(Context activity) {
         super.onAttach(activity);
         try {
-            callback = (OnFinishListener) activity;
+//            callback = (OnFinishListener) activity;
         } catch (Exception e) {
             e.printStackTrace();
         }
