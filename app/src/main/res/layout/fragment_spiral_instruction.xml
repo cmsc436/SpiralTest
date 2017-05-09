@@ -47,10 +47,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/aboutText"
         android:layout_marginTop="10dp"
-        android:text="Start Practice"
+        android:text="Done"
         android:textSize="22dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/startButton"/>
+        android:id="@+id/doneButton"/>
 
 
 </RelativeLayout>

@@ -24,8 +24,7 @@ import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialNum;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialOutOf;
 import static edu.umd.cmsc436.sheets.Sheets.TestType;
 
-public class SpiralTest extends FragmentActivity implements
-        SpiralInstructionFragment.StartSpiralPracticeListener, Sheets.Host {
+public class SpiralTest extends FragmentActivity implements Sheets.Host {
     public static final String RESULT_KEY = "RESULT_KEY";
     public static final String TOTAL_ROUND_KEY = "TOTAL_ROUND_KEY";
     public static final String ROUND_KEY = "ROUND_KEY";
@@ -33,8 +32,6 @@ public class SpiralTest extends FragmentActivity implements
     public static final String SIDE_KEY = "SIDE_KEY";
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
     public static final String MODE_KEY = "MODE_KEY";
-    private static final String DEFAULT_SIDE = TestType.RH_SPIRAL.toId();
-    private static final int DEFAULT_DIFFICULTY = 1;
     private static final int PERMISSION_REQUEST_CODE = 1;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -54,11 +51,13 @@ public class SpiralTest extends FragmentActivity implements
         Intent intent = getIntent();
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-        }
 
         if (intent.getAction().equals("edu.umd.cmsc436.spiral.action.TRIAL")) {
+            // get permissions to save screenshots into gallery
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+
             side = getAppendage(intent).toId();
             difficulty = getDifficulty(intent);
             trialNum = getTrialNum(intent);
@@ -75,7 +74,7 @@ public class SpiralTest extends FragmentActivity implements
             transaction.add(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
 
         } else {
-            SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
+            PracticeMenuFragment fragment = new PracticeMenuFragment();
 
             //Test TRIAL Mode
 //            SpiralTestFragment fragment = newInstance(false, TestType.LH_SPIRAL.toId(), DEFAULT_DIFFICULTY, 1, 3, "user123");
@@ -101,8 +100,8 @@ public class SpiralTest extends FragmentActivity implements
         setResult(Activity.RESULT_OK,data);
     }
 
-    public void startPractice() {
-        SpiralTestFragment fragment = newInstance(true, DEFAULT_SIDE, DEFAULT_DIFFICULTY, -1, -1, null);
+    public void startPractice(String side, int difficulty) {
+        SpiralTestFragment fragment = newInstance(true, side, difficulty, -1, -1, null);
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.addToBackStack(null);

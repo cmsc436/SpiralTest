@@ -41,8 +41,11 @@ public class SpiralTestFragment extends Fragment{
     public static final int EASY_TRACE_SIZE = 60;
     public static final int MEDIUM_TRACE_SIZE = 50;
     public static final int HARD_TRACE_SIZE = 40;
+    public static final float EASY_FACTOR = 1;
+    public static final float MEDIUM_FACTOR = (float)1.5;
+    public static final float HARD_FACTOR = 2;
 
-
+    private float scoreFactor;
     private SpiralTest activity;
     private Button button;
     private ImageView original;
@@ -129,6 +132,7 @@ public class SpiralTestFragment extends Fragment{
                 } else {
                     original.setImageResource(R.drawable.easy_spiral_r);
                 }
+                scoreFactor = EASY_FACTOR;
                 drawView.setDrawPaintSize(EASY_TRACE_SIZE);
                 break;
             case 3:
@@ -138,6 +142,7 @@ public class SpiralTestFragment extends Fragment{
                 } else {
                     original.setImageResource(R.drawable.hard_spiral_r);
                 }
+                scoreFactor = HARD_FACTOR;
                 drawView.setDrawPaintSize(HARD_TRACE_SIZE);
                 break;
             default:
@@ -147,6 +152,7 @@ public class SpiralTestFragment extends Fragment{
                 } else {
                     original.setImageResource(R.drawable.medium_spiral_r);
                 }
+                scoreFactor = MEDIUM_FACTOR;
                 drawView.setDrawPaintSize(MEDIUM_TRACE_SIZE);
                 break;
         }
@@ -225,12 +231,22 @@ public class SpiralTestFragment extends Fragment{
 
     }
 
+    // time
+    // [0] = time allotted
+    // [1] = time spent
+    // [2] = time remaining
+    // results
+    // [0] = overall score
+    // [1] = correctly drawn/total drawn
+    // [2] = pixels missed on original spiral %
+    // [3] = duration
     // 100% accuracy + 20% extra time remaining
     // initially, accuracy = 50% part of original spiral that is drawn over + 50% accurate pixels among all pixels drawn
     // but having some issues with the accuracy of portion of original spiral that is covered
     public float computeScore() {
 //        return (float)(results[1] + (time[2]/time[0])*20);
-        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*30);
+//        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*30);
+        return (float)(results[1]*.5 + (100-results[2])*.5) * (time[2]/1000) * scoreFactor;
     }
 
     public float computeAccuracy() {
@@ -301,7 +317,7 @@ public class SpiralTestFragment extends Fragment{
                     UUID.randomUUID().toString() + ".png", "drawing");
             if (imgSaved != null) {
                 Toast savedToast = Toast.makeText(activity.getApplicationContext(),
-                        "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
+                        "Drawing saved to Gallery! ", Toast.LENGTH_SHORT);
                 savedToast.show();
             } else {
                 Toast unsavedToast = Toast.makeText(activity.getApplicationContext(),
