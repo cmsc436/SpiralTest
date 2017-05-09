@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_spiral_test"
     android:layout_width="match_parent"
@@ -8,65 +8,54 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:screenOrientation="portrait"
-    tools:context="cmsc436.umd.edu.spiraltest.SpiralTest">
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="cmsc436.umd.edu.spiraltest.SpiralTest"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="22dp"
-        android:id="@+id/timerText"
-        android:layout_below="@+id/roundText"/>
+        android:id="@+id/instructions"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/roundText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="26dp" />
+        android:gravity="center"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="22dp"
+        android:id="@+id/timerText"/>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="400dp">
+
         <ImageView
             android:id="@+id/spiral"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
-            <!--android:tint="@color/colorBackground436"-->
-            <!--/>-->
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorAccent436"
+            />
+
         <cmsc436.umd.edu.spiraltest.DrawingView
             android:id="@+id/drawView"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/spiral"
-            android:layout_alignEnd="@+id/spiral"
-            android:layout_alignLeft="@+id/spiral"
-            android:layout_alignRight="@+id/spiral"
-            android:layout_alignStart="@+id/spiral"
-            android:layout_alignTop="@+id/spiral" />
+            android:layout_gravity="center" />
     </FrameLayout>
-
 
     <Button
         android:id="@+id/finish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:text="Finish" />
 
-    <TextView
-        android:id="@+id/instructions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/roundText"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:textSize="30dp" />
-
-
-</RelativeLayout>
+</LinearLayout>
