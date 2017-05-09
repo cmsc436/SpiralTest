@@ -254,7 +254,7 @@ public class SpiralTestFragment extends Fragment{
     public float computeScore() {
 //        return (float)(results[1] + (time[2]/time[0])*20);
 //        return (float)(results[1]*.5 + (100-results[2])*.5 + (time[2]/time[0])*30);
-        return (float)(results[1]*.5 + (100-results[2])*.5) * (time[2]/1000) * scoreFactor;
+        return (float)(results[1]*.5 + (100-results[2])*.5) * ((time[2]/1000)+1) * scoreFactor;
     }
 
     public float computeAccuracy() {
