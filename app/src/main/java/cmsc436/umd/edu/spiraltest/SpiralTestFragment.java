@@ -1,7 +1,6 @@
 package cmsc436.umd.edu.spiraltest;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -47,7 +46,7 @@ public class SpiralTestFragment extends Fragment{
     public static final float HARD_FACTOR = 2;
 
     private float scoreFactor;
-    private Activity activity;
+    private SpiralTest activity;
     private Button button;
     private ImageView original;
     private View view;
@@ -104,7 +103,7 @@ public class SpiralTestFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        activity = getActivity();
+        activity = (SpiralTest) getActivity();
         view = inflater.inflate(R.layout.fragment_spiral_test, container, false);
         button = (Button)view.findViewById(R.id.finish);
         side = getArguments().getString(SIDE_KEY);
@@ -220,6 +219,7 @@ public class SpiralTestFragment extends Fragment{
                     //sendToSheet
                     beginSheetResponse(b);
 
+                    activity.finishTest(results[1], results[3], results[0]);
 
                     // TODO in trial mode: redirect to the results page
                 }
@@ -306,7 +306,7 @@ public class SpiralTestFragment extends Fragment{
     public void onAttach(Context activity) {
         super.onAttach(activity);
         try {
-            callback = (OnFinishListener) activity;
+//            callback = (OnFinishListener) activity;
         } catch (Exception e) {
             e.printStackTrace();
         }

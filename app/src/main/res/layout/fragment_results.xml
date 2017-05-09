@@ -1,0 +1,44 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cmsc436.umd.edu.spiraltest.ResultsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Results"
+            android:textAlignment="center"
+            android:textSize="16pt"
+            android:layout_margin="10px"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Accuracy: "
+            android:textSize="14pt"
+            android:id="@+id/accuracy"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time Spent: "
+            android:textSize="14pt"
+            android:id="@+id/time"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Overall Score: "
+            android:textSize="14pt"
+            android:id="@+id/score"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</FrameLayout>
