@@ -2,18 +2,18 @@ package cmsc436.umd.edu.spiraltest;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class ResultsFragment extends Fragment {
-    private static final String ACCURACY = "param1";
-    private static final String TIME = "param2";
-    private static final String SCORE = "param2";
+    private static final String ACCURACY = "ACCURACY";
+    private static final String TIME = "TIME";
+    private static final String SCORE = "SCORE";
 
 
-    // TODO: Rename and change types of parameters
     private float accuracy;
     private float time;
     private float score;
@@ -23,7 +23,6 @@ public class ResultsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static ResultsFragment newInstance(float acc, float time, float score) {
         ResultsFragment fragment = new ResultsFragment();
         Bundle args = new Bundle();
@@ -42,6 +41,7 @@ public class ResultsFragment extends Fragment {
             accuracy = getArguments().getFloat(ACCURACY);
             time = getArguments().getFloat(TIME);
             score = getArguments().getFloat(SCORE);
+//            Log.d("results:", String.valueOf(time));
         }
     }
 
@@ -57,7 +57,7 @@ public class ResultsFragment extends Fragment {
         TextView scoreText = (TextView) v.findViewById(R.id.score);
 
         acc.setText("Accuracy: " + accuracy + "%");
-        timeText.setText("Time Spent: " + time);
+        timeText.setText("Time Spent: " + time/1000 + " seconds");
         scoreText.setText("Score: " + score);
 
         return v;

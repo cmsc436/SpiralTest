@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleText"
         android:layout_marginTop="10dp"
-        android:text="\tTrace over the gray spiral with your finger as quickly and precisely as you can. As soon as you start tracing the spiral a timer will begin counting down and the time will be displayed at the top of the screen. Once you have finished, tap the finish button to stop the timer and end the round."
+        android:text="\tTrace over the blue spiral with your finger as quickly and precisely as you can. As soon as you start tracing the spiral a timer will begin counting down and the time will be displayed at the top of the screen. Once you have finished, tap the finish button to stop the timer and end the round."
         android:textSize="20dp"
         android:id="@+id/instructionText"/>
 

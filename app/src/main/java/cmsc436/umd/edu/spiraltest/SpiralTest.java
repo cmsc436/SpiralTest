@@ -134,6 +134,7 @@ public class SpiralTest extends FragmentActivity implements Sheets.Host {
     }
 
     public void finishTest(float accuracy, float time, float score) {
+//        Log.d("main:", String.valueOf(time));
         ResultsFragment fragment = newInstance(accuracy, time, score);
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
@@ -153,9 +154,9 @@ public class SpiralTest extends FragmentActivity implements Sheets.Host {
 
     public void sendToGroupSheet(String userId,String side, float[] trialData){
         if (side.indexOf("LH") != -1){
-//            sheet.writeTrials(TestType.LH_SPIRAL,userId,trialData);
+            sheet.writeTrials(TestType.LH_SPIRAL,userId,trialData);
         }else {
-//            sheet.writeTrials(TestType.RH_SPIRAL,userId,trialData);
+            sheet.writeTrials(TestType.RH_SPIRAL,userId,trialData);
         }
 
 
