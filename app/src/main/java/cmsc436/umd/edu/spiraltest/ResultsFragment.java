@@ -56,7 +56,7 @@ public class ResultsFragment extends Fragment {
         TextView timeText = (TextView) v.findViewById(R.id.time);
         TextView scoreText = (TextView) v.findViewById(R.id.score);
 
-        acc.setText("Accuracy: " + accuracy);
+        acc.setText("Accuracy: " + accuracy + "%");
         timeText.setText("Time Spent: " + time);
         scoreText.setText("Score: " + score);
 
