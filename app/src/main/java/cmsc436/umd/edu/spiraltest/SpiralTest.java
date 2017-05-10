@@ -153,9 +153,9 @@ public class SpiralTest extends FragmentActivity implements Sheets.Host {
 
     public void sendToGroupSheet(String userId,String side, float[] trialData){
         if (side.indexOf("LH") != -1){
-//            sheet.writeTrials(TestType.LH_SPIRAL,userId,trialData);
+            sheet.writeTrials(TestType.LH_SPIRAL,userId,trialData);
         }else {
-//            sheet.writeTrials(TestType.RH_SPIRAL,userId,trialData);
+            sheet.writeTrials(TestType.RH_SPIRAL,userId,trialData);
         }
 
 
