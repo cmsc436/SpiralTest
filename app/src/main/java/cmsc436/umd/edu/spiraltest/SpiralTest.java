@@ -134,6 +134,7 @@ public class SpiralTest extends FragmentActivity implements Sheets.Host {
     }
 
     public void finishTest(float accuracy, float time, float score) {
+//        Log.d("main:", String.valueOf(time));
         ResultsFragment fragment = newInstance(accuracy, time, score);
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);

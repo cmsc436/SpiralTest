@@ -208,7 +208,7 @@ public class SpiralTestFragment extends Fragment{
 
                     // display the overall score on the bottom of the screen so its included in screenshot
                     drawView.displayScore(results[0]);
-                    Log.d("sheets stuff", String.valueOf(results[0]));
+
 
                     text.setText("Round Complete!");
                     Bitmap b = saveDrawing();
@@ -219,9 +219,10 @@ public class SpiralTestFragment extends Fragment{
                     //sendToSheet
                     beginSheetResponse(b);
 
+                    // redirect to the results page
+//                    Log.d("spiraltest:", String.valueOf(results[3]));
                     activity.finishTest(results[1], results[3], results[0]);
 
-                    // TODO in trial mode: redirect to the results page
                 }
             });
         } else {
