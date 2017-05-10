@@ -125,6 +125,7 @@ public class SpiralTestFragment extends Fragment{
         original = (ImageView)view.findViewById(R.id.spiral);
 
 
+
         // Select spiral depending on difficulty
         switch (difficulty) {
             case 1:
@@ -207,8 +208,7 @@ public class SpiralTestFragment extends Fragment{
                     results[0] = computeScore(); // overall score
 
                     // display the overall score on the bottom of the screen so its included in screenshot
-                    drawView.displayScore(results[0]);
-
+                    button.setText("Score = " + results[0]);
 
                     text.setText("Round Complete!");
                     Bitmap b = saveDrawing();
